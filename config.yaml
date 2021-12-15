@@ -1,0 +1,14 @@
+model_params:
+  epochs: 1
+  loss: categorical_crossentropy
+  optimizer: adam
+  metrics: ['accuracy']
+
+data_params:
+  train_path:
+  test_path:
+  split_ratio:
+
+artifacts:
+  models: Models
+  plots: Plots
