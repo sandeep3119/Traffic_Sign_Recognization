@@ -25,23 +25,21 @@ def build_model(X_train):
     ]
     model=Sequential(layers=layers)
     return model
-
-def save_model(model,path):
-    model_path=os.makedirs(path,'model.h5')
-    model.save(model_path)
-    return model_path
     
 
 def test_model(test_data,model):
-    y_test=pd.read_csv('Test.csv')
+    file=os.path.join(test_data)
+    y_test=pd.read_csv(file)
     actual=y_test['ClassId'].values
     images=y_test['Path'].values
+    images=[path.replace('/','\\') for path in images]
     data=[]
     for img in images:
-        image=load_image(img)
+        img_path=os.path.join('Data',img)
+        image=load_image(img_path)
         data.append(image)
     X_test=np.array(data)
-    pred=model.predict_classes(X_test)
+    pred=np.argmax(model.predict(X_test), axis=-1)
     return accuracy_score(actual,pred)
 
 

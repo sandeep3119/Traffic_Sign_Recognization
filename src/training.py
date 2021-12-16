@@ -1,12 +1,18 @@
 from sklearn import metrics
 from utils.image_processing_util import arrange_data
-from utils.model_util import build_model,save_model,test_model
+from utils.model_util import build_model,test_model
 from utils.common_util import read_config
 import argparse
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
+import mlflow.keras
+import mlflow.tensorflow
+import mlflow
 
 def training(config_path):
+    mlflow.set_tracking_uri('http://127.0.0.1:1234')
+    mlflow.set_experiment('Cnn_architechture')
+    mlflow.tensorflow.autolog()
     config=read_config(config_path)
     train_data_folder=config['data_params']['train_data_path']
     data,labels=arrange_data(train_data_folder)
@@ -20,8 +26,15 @@ def training(config_path):
     OPTIMIZER=config['model_params']['optimizer']
     METRICS=config['model_params']['metrics']
     EPOCHS=config['model_params']['epochs']
+    BATCH_SIZE=config['model_params']['batch_size']
     model.compile(loss=LOSS,optimizer=OPTIMIZER,metrics=METRICS)
-    history=model.fit(X_train,y_train,batch_size=64,epochs=EPOCHS,validation_data=(X_test,y_test))
+    history=model.fit(X_train,y_train,batch_size=BATCH_SIZE,epochs=EPOCHS,validation_data=(X_test,y_test))
+    test_file=config['data_params']['test_path']
+    score = test_model(test_file,model)
+    print(f"Test_Accuracy:{score}")
+   
+
+
 
 
 if __name__=='__main__':

@@ -4,3 +4,6 @@ With the use of Kaggle Traffic Sign Dataset, A CNN model is trained to recognize
 ### Data set Used
 https://www.kaggle.com/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign
 
+## To run mlflow ui
+```mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns```
+

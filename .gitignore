@@ -130,3 +130,6 @@ dmypy.json
 
 #Data
 /Data
+/mlruns
+/mlflow.db
+/artifacts
