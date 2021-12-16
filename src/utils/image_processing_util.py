@@ -12,7 +12,7 @@ def arrange_data(folder):
     num_of_class=43
 
     for i in range(num_of_class):
-        path=os.path.join(folder+str(i))
+        path=os.path.join(folder,str(i))
         images=os.listdir(path)
         for img in images:
             image_path=os.path.join(path,img)

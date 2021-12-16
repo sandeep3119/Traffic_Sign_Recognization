@@ -4,12 +4,11 @@ from tensorflow.keras.utils import to_categorical
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
-from image_processing_util import load_image
+from utils.image_processing_util import load_image
 import numpy as np
 from sklearn.metrics import accuracy_score
 
 def build_model(X_train):
-    model=Sequential()
     layers=[
         Conv2D(filters=32,kernel_size=(5,5),activation='relu',input_shape=X_train.shape[1:]),
         Conv2D(filters=32,kernel_size=(5,5),activation='relu'),
@@ -24,8 +23,7 @@ def build_model(X_train):
         Dropout(rate=0.4),
         Dense(units=43,activation='softmax')
     ]
-
-    model.add(layers)
+    model=Sequential(layers=layers)
     return model
 
 def save_model(model,path):
