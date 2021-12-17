@@ -12,7 +12,6 @@ import mlflow
 def training(config_path):
     mlflow.set_tracking_uri('http://127.0.0.1:1234')
     mlflow.set_experiment('Cnn_architechture')
-    mlflow.tensorflow.autolog()
     config=read_config(config_path)
     train_data_folder=config['data_params']['train_data_path']
     data,labels=arrange_data(train_data_folder)
@@ -27,14 +26,26 @@ def training(config_path):
     METRICS=config['model_params']['metrics']
     EPOCHS=config['model_params']['epochs']
     BATCH_SIZE=config['model_params']['batch_size']
-    model.compile(loss=LOSS,optimizer=OPTIMIZER,metrics=METRICS)
-    history=model.fit(X_train,y_train,batch_size=BATCH_SIZE,epochs=EPOCHS,validation_data=(X_test,y_test))
-    test_file=config['data_params']['test_path']
-    score = test_model(test_file,model)
-    print(f"Test_Accuracy:{score}")
+
+    with mlflow.start_run() as mlops:
+        model.compile(loss=LOSS,optimizer=OPTIMIZER,metrics=METRICS)
+        history=model.fit(X_train,y_train,batch_size=BATCH_SIZE,epochs=EPOCHS,validation_data=(X_test,y_test))
+        test_file=config['data_params']['test_path']
+        score = test_model(test_file,model)
+        print(f"Test_Accuracy:{score}")
+        mlflow.log_param('epochs',EPOCHS)
+        mlflow.log_param('loss_function',LOSS)
+        mlflow.log_param('batch_size',BATCH_SIZE)
+        mlflow.log_param('optimizer',OPTIMIZER)
+        mlflow.log_param('model_layers',model.layers)
+        mlflow.log_metric('train_accuracy',history.history['accuracy'][-1])
+        mlflow.log_metric('loss',history.history['loss'][-1])
+        mlflow.log_metric('val_loss',history.history['val_loss'][-1])
+        mlflow.log_metric('val_accuracy',history.history['val_accuracy'][-1])
+        mlflow.log_metric('test_accuracy',score)
+        mlflow.keras.log_model(model,"model",registered_model_name="CNN")
+
    
-
-
 
 
 if __name__=='__main__':

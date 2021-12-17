@@ -1,9 +1,9 @@
 model_params:
   epochs: 1
   loss: categorical_crossentropy
-  optimizer: adam
+  optimizer: RmsProp
   metrics: ['accuracy']
-  batch_size: 128
+  batch_size: 32
 
 data_params:
   train_data_path: Data\Train
