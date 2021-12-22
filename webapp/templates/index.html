@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Traffic-Sign Recognizer
+{% endblock title %}
+
+
+{% block custom_css %}
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock custom_css %}
+
+
+{% block body %}
+<body>
+    <h1>Traffic-Sign Recognizer</h1>
+    <form action="{{ url_for('upload_files') }}" class="dropzone">
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
+
+    <button class="button-9" role="button">Predict</button>
+  </body>
+{{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
+{% endblock body %}
+
+ {% block custom_js %}
+        <!-- Custom JS -->
+        <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+  {% endblock custom_js %}
