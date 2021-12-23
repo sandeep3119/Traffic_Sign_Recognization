@@ -1,7 +1,7 @@
 -e .
 
 
-tensorflow
+tensorflow-cpu
 mlflow
 pandas
 numpy
