@@ -10,9 +10,10 @@ import mlflow.tensorflow
 import mlflow
 
 def training(config_path):
-    mlflow.set_tracking_uri('http://127.0.0.1:1234')
-    mlflow.set_experiment('Cnn_architechture')
+    
     config=read_config(config_path)
+    mlflow.set_tracking_uri(config['mlflow_config']['remote_server_uri'])
+    mlflow.set_experiment(config['mlflow_config']['experiment_name'])
     train_data_folder=config['data_params']['train_data_path']
     data,labels=arrange_data(train_data_folder)
     split_ratio=config['data_params']['split_ratio']
@@ -27,7 +28,7 @@ def training(config_path):
     EPOCHS=config['model_params']['epochs']
     BATCH_SIZE=config['model_params']['batch_size']
 
-    with mlflow.start_run() as mlops:
+    with mlflow.start_run() as config['mlflow_config']['run_name']:
         model.compile(loss=LOSS,optimizer=OPTIMIZER,metrics=METRICS)
         history=model.fit(X_train,y_train,batch_size=BATCH_SIZE,epochs=EPOCHS,validation_data=(X_test,y_test))
         test_file=config['data_params']['test_path']
