@@ -2,6 +2,7 @@ import imghdr
 import os
 from flask import Flask, render_template, request, redirect, url_for, abort,send_from_directory,jsonify
 from flask.helpers import flash
+from flask.templating import render_template_string
 from werkzeug.utils import secure_filename
 from flask_dropzone import Dropzone
 from prediction_service.prediction import predict_sign
@@ -12,7 +13,7 @@ from prediction_service.prediction import predict_sign
 webapp_root = "webapp"
 static_dir = os.path.join(webapp_root, "static")
 template_dir = os.path.join(webapp_root, "templates")
-
+prediction_file= os.path.join('prediction_service','prediction.txt')
 
 app = Flask(__name__,static_folder=static_dir,template_folder=template_dir)
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png','jpeg']
@@ -32,6 +33,12 @@ def validate_image(stream):
 def index():
     files = os.listdir(app.config['UPLOAD_PATH'])
     return render_template('index.html', files=files)
+@app.route('/prediction',methods=['GET'])
+def indexPrediction():
+    file1 = open(prediction_file, "r")
+    content=file1.read()
+    file1.close()
+    return render_template('index.html',pred=content)
 
 @app.route('/predict', methods=['POST'])
 def upload_files():
@@ -43,9 +50,10 @@ def upload_files():
             return "Invalid image", 400
         image_path=uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
         prediction=predict_sign(os.path.join(app.config['UPLOAD_PATH'], filename))
-        print('Prediction',prediction)
-        flash(prediction)
-    return 'helllllllo'
+        file1 = open(prediction_file, "w")  # write mode
+        file1.write(prediction)
+        file1.close()
+    return prediction,200
 
 @app.route('/uploads/<filename>')
 def upload(filename):

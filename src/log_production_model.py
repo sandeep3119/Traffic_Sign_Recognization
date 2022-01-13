@@ -8,7 +8,7 @@ import os
 
 def log_production_model(config_path):
     config=read_config(config_path)
-
+    model_detail_file=os.path.join('prediction_service','model_details.txt')
     mlflow_config=config['mlflow_config']
     model_name=mlflow_config['registered_model_name']
     remote_server_uri=mlflow_config['remote_server_uri']

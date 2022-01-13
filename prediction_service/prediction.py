@@ -57,5 +57,4 @@ def predict_sign(file_path):
     y_predict = np.argmax(model.predict(image), axis=-1)
     # pred = model.predict_classes([image])[0]
     sign = classes[y_predict[0]+1]
-    print(sign)
     return sign

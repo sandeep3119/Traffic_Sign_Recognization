@@ -1,5 +1,5 @@
 model_params:
-  epochs: 1
+  epochs: 20
   loss: categorical_crossentropy
   optimizer: RmsProp
   metrics: ['accuracy']

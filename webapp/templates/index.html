@@ -15,6 +15,7 @@ Traffic-Sign Recognizer
 <body>
   <div class="head">
     <h1>Traffic-Sign Recognizer</h1>
+    <a href="https://github.com/sandeep3119/Traffic_Sign_Recognization">Github Repository</a>
  </div>
   
   <div class="main">
@@ -23,11 +24,10 @@ Traffic-Sign Recognizer
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
 
-    <button class="button-9" role="button"> <a style="color: white" href="{{ url_for('index') }}">Predict</a></button>
+    <button class="button-9" role="button"> <a style="color: white" href="{{ url_for('indexPrediction',pred=pred) }}">Predict</a></button>
   </div>
     <div class="prediction">
       {% include 'result.html' %}
-     
     </div>
   </div>
   </body>

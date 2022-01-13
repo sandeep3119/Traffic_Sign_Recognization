@@ -7,10 +7,14 @@ div.main{
   grid-template-columns: 70% auto;
 }
 div.head{
-  width: 100%;
-  height: 100px;
-  display: flex;
+  display: grid;
+  grid-template-rows: 100px auto;
   justify-content: center;
+}
+div.head > a{
+  justify-items: center;
+   display: grid;
+   font-size: 30px;
 }
 div.form{
   display: grid;
