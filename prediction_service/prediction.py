@@ -2,6 +2,7 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 import numpy as np
 from src.utils.image_processing_util import load_image
+import os
 #dictionary to label all traffic signs class.
 classes = { 1:'Speed limit (20km/h)',
             2:'Speed limit (30km/h)', 
@@ -49,7 +50,8 @@ classes = { 1:'Speed limit (20km/h)',
 
 def predict_sign(file_path):
     print('________________',file_path)
-    model=load_model('prediction_service\model')
+    model_path=os.path.join('prediction_service','model')
+    model=load_model(model_path)
     image = load_image(file_path)
     image = np.expand_dims(image, axis=0)
     image = np.array(image)

@@ -48,8 +48,8 @@ def upload_files():
         file_ext = os.path.splitext(filename)[1]
         if file_ext not in app.config['UPLOAD_EXTENSIONS'] or file_ext != validate_image(uploaded_file.stream):
             return "Invalid image", 400
-        image_path=uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-        prediction=predict_sign(os.path.join(app.config['UPLOAD_PATH'], filename))
+        image_path=uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], 'image'))
+        prediction=predict_sign(os.path.join(app.config['UPLOAD_PATH'], 'image'))
         file1 = open(prediction_file, "w")  # write mode
         file1.write(prediction)
         file1.close()
