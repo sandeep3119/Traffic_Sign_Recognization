@@ -1,11 +1,11 @@
 # Traffic_Sign_Recognization
 With the use of Kaggle Traffic Sign Dataset, A CNN model is trained to recognize traffic sign with more than 43 classes.
 
-This project uses MLFLOW for logging purpose and contains github worflows aswell for ci-cd pipeline.
-Project is deployed on Heroku.
-To deploy the project on your heroku server configure
-    HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
-    HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }} 
+This project uses MLFLOW for logging purpose and contains github worflows aswell for ci-cd pipeline.</br>
+Project is deployed on Heroku.</br>
+To deploy the project on your heroku server configure</br>
+    **HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}</br>
+    HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}**</br>
 on your github account.
 
 ### Data set Used
@@ -16,7 +16,7 @@ https://www.kaggle.com/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign
 https://trafficsign-recognizer.herokuapp.com/
 
 ## To run mlflow ui
-Run Mlflow before running any training. This will setup mlflow db and experiment for us.
+Run Mlflow before running any training. This will setup mlflow db and experiment for us.</br>
 ```mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns```
 
 ## To Edit the model architecture
@@ -26,7 +26,7 @@ Edit src/utils/model_uti.py
 Edit config.yaml
 
 ## Run Training after editing
-```python src/training.py```
+```python src/training.py```</br>
 Each training will be logged to Mlflow with parameter,architecture,metrics and model
 
 After some different model architectures and paramter, try to log best model to production.
@@ -53,4 +53,4 @@ After some different model architectures and paramter, try to log best model to 
         Dropout(rate=0.4),
         Dense(units=43,activation='softmax')
     
-    With epochs=20, optimizer=adam and batch_size=32 got an accuracy of *0.95*
+   With epochs=20, optimizer=adam and batch_size=32 got an accuracy of **0.95**
